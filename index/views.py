@@ -5,4 +5,4 @@ from django.views.generic import TemplateView
 # Create your views here.
 
 class MainView(TemplateView):
-    template_name = 'index/main.html'
+    template_name = 'index/index.html'
