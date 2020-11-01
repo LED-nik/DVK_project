@@ -15,8 +15,8 @@ class Order(models.Model):
     ]
     item = models.ForeignKey('Item', on_delete=models.CASCADE)
     count = models.IntegerField()
-#   user_id = models.ForeignKey('User', on_delete=models.CASCADE())
-    address_id = models.ForeignKey('Address', on_delete=models.CASCADE)
+    #  user = models.ForeignKey('User', on_delete=models.CASCADE())
+    address = models.ForeignKey('Address', on_delete=models.CASCADE)
     payment_method = models.CharField(choices=METHOD_PAYMENT, max_length=50)
 
 
@@ -30,6 +30,6 @@ class CreditCard(models.Model):
     number = models.IntegerField()
     card_holder = models.CharField(max_length=100)
     exp_date = models.DateField()
-#   user_id = models.ForeignKey('User', on_delete=models.CASCADE())S
+    #  user = models.ForeignKey('User', on_delete=models.CASCADE())S
 
 
