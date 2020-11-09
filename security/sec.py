@@ -1,4 +1,7 @@
+import hashlib
 import random
+
+from .models import Session
 
 
 class RSA:
@@ -74,3 +77,24 @@ class RSA:
 
     def decrypting(self, encrypt_message):
         decrypt_message = self.decrypt(encrypt_message, self.secret_key)
+
+
+class UserCheckMixin:
+    user_session: Session = None
+
+    def user_has_session(self, request):
+        self.user_session = self.get_user_session(request)
+        if self.user_session is not None:
+            return True
+        return False
+
+    @staticmethod
+    def get_user_session(request):
+        sid_str = request.COOKIES.get('sid', '')
+        ip = request.META.get('REMOTE_ADDR')
+        try:
+            session_object = Session.objects.get(
+                session_data=hashlib.sha3_256((sid_str + ip).encode('UTF-8')).hexdigest())
+        except Session.DoesNotExist:
+            return None
+        return session_object
