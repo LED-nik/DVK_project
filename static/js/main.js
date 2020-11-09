@@ -1,6 +1,17 @@
 $(document).ready(function () {
     $('.header').height($(window).height());
 
+    function encrypt(passw, openKey, n) {
+        let message = passw.split("");
+        let encryptedMessage = [];
+
+        for (let char of message) {
+            encryptedMessage.push((BigInt(char.charCodeAt(0)) ** BigInt(openKey)) % BigInt(n));
+        }
+        console.log(message, encryptedMessage);
+        return encryptedMessage.join("O")
+    }
+
     function getCookie(name) {
         var cookieValue = null;
 
@@ -45,6 +56,8 @@ $(document).ready(function () {
         e.preventDefault();
         let data = {};
         if (getCookie('sid') === "undefined" || !getCookie('sid')) {
+            let encryptedPass = encrypt($(this).find('input[name="password"]').val(), getCookie('open_key'), getCookie('n'));
+            $(this).find('input[name="password"]').val(encryptedPass);
             data = $(this).serialize();
         } else {
             const sid = getCookie('sid');

@@ -1,9 +1,12 @@
+import datetime
+
 from django.http.response import HttpResponse, JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import render
 
 from index.models import CustomUser
-from security.models import Session
+from security.sec import OPEN_KEY_TUPLE, SECRET_KEY_TUPLE, RSA
+from security.models import Session, EncryptionKeys
 from security.views import ProtectedView
 
 
@@ -13,8 +16,9 @@ class LogInView(ProtectedView):
         if not self.user_is_logged_in:
             login = request.POST.get('login', '')
             password = request.POST.get('password', '')
+            decrypted_password = RSA.decrypt(password, SECRET_KEY_TUPLE)
             try:
-                user = CustomUser.objects.get(login=login, password=password)
+                user = CustomUser.objects.get(login=login, password=decrypted_password)
             except CustomUser.DoesNotExist:
                 return JsonResponse({'message': 'Нет такого пользователя в системе! Проверьте логин и пароль.'},
                                     status=404)
@@ -22,8 +26,17 @@ class LogInView(ProtectedView):
         return JsonResponse({'csrf': get_token(request), 'sid': sid_str or '', 'redirect_url': '/welcome'})
 
     def get(self, request):
-        return render(request, 'index/reg-auth.html',
-                      {'csrf': get_token(request)})  # TODO: поменять на custom_csrf_token и проверять его
+        open_key = OPEN_KEY_TUPLE[0]
+        secret_key = SECRET_KEY_TUPLE[0]
+        n = OPEN_KEY_TUPLE[1]
+        EncryptionKeys.objects.create(open_key=open_key, secret_key=secret_key, n_element=n,
+                                      expire_date=datetime.datetime.now() + datetime.timedelta(minutes=5))
+        response = render(request, 'index/reg-auth.html',
+                      {'csrf': get_token(request), 'open_key': open_key,
+                       'n': n})  # TODO: поменять на custom_csrf_token и проверять его, а не встроенный
+        response.set_cookie(key='open_key', value=open_key)
+        response.set_cookie(key='n', value=n)
+        return response
 
 
 class LogOutView(ProtectedView):

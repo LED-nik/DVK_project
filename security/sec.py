@@ -2,6 +2,7 @@ import hashlib
 import random
 
 from .models import Session
+from index.models import CustomUser
 
 
 class RSA:
@@ -38,10 +39,11 @@ class RSA:
                 b %= a
         return a + b
 
-    def e_generator(self, n, fi):
+    @classmethod
+    def e_generator(cls, n, fi):
         e = n - 1
         while 0 < e < n:
-            if self.gcd(e, fi) == 1:
+            if cls.gcd(e, fi) == 1:
                 return e
             e -= 1
         return -1
@@ -53,13 +55,14 @@ class RSA:
             d += 1
         return d
 
-    def rsa_keys(self):
-        p, q = [self.prime_generator() for _ in range(2)]
+    @classmethod
+    def rsa_keys(cls):
+        p, q = [cls.prime_generator() for _ in range(2)]
         n = p * q
         fi = (p - 1) * (q - 1)
-        e = self.e_generator(n, fi)
-        d = self.d_generator(e, fi)
-        return (e, n), (d, n)
+        open_key = cls.e_generator(n, fi)
+        secret_key = cls.d_generator(open_key, fi)
+        return (open_key, n), (secret_key, n)
 
     @staticmethod
     def encrypt(message, open_key):
@@ -71,20 +74,23 @@ class RSA:
         message = ((int(c) ** secret_key[0]) % secret_key[1] for c in encrypt_message.split('O'))
         return ''.join(chr(i) for i in message)
 
-    def rsa_generator(self):
-        open_key, secret_key = self.rsa_keys()
+    @classmethod
+    def rsa_generator(cls):
+        open_key, secret_key = cls.rsa_keys()
         return open_key, secret_key
 
-    def decrypting(self, encrypt_message):
-        decrypt_message = self.decrypt(encrypt_message, self.secret_key)
+
+OPEN_KEY_TUPLE, SECRET_KEY_TUPLE = RSA.rsa_generator()
 
 
 class UserCheckMixin:
     user_session: Session = None
+    current_user: CustomUser = None
 
     def user_has_session(self, request):
         self.user_session = self.get_user_session(request)
         if self.user_session is not None:
+            self.current_user = self.user_session.user
             return True
         return False
 

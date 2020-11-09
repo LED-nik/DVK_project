@@ -25,3 +25,10 @@ class Session(models.Model):
         Session.objects.create(session_data=session_data,
                                expire_date=datetime.datetime.now() + datetime.timedelta(minutes=5), user=user)
         return sid_str
+
+
+class EncryptionKeys(models.Model):
+    open_key = models.BigIntegerField(verbose_name='Открытый ключ')
+    secret_key = models.BigIntegerField(verbose_name='Закрытый ключ')
+    n_element = models.BigIntegerField(verbose_name='Важный элемент n, без которого шифрование не работает')
+    expire_date = models.DateTimeField(verbose_name='Срок истечения времени жизни ключей')
