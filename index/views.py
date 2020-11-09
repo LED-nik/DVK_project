@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 
 from django.http.response import HttpResponse, JsonResponse
 from django.middleware.csrf import get_token
@@ -17,8 +18,9 @@ class LogInView(ProtectedView):
             login = request.POST.get('login', '')
             password = request.POST.get('password', '')
             decrypted_password = RSA.decrypt(password, SECRET_KEY_TUPLE)
+            hash_password = hashlib.sha3_256(decrypted_password.encode('UTF-8')).hexdigest()
             try:
-                user = CustomUser.objects.get(login=login, password=decrypted_password)
+                user = CustomUser.objects.get(login=login, password=hash_password)
             except CustomUser.DoesNotExist:
                 return JsonResponse({'message': 'Нет такого пользователя в системе! Проверьте логин и пароль.'},
                                     status=404)
@@ -53,7 +55,7 @@ class UserCreateView(ProtectedView):
         user_object.name = request.POST.get('name')
         user_object.last_name = request.POST.get('last_name')
         user_object.patronymic = request.POST.get('patronymic')
-        user_object.password = request.POST.get('password')
+        user_object.password = hashlib.sha3_256(request.POST.get('password').encode('UTF-8')).hexdigest()
         user_object.login = request.POST.get('login')
         user_object.save()
         return HttpResponse()

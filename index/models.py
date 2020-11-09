@@ -3,7 +3,7 @@ from django.db import models
 
 class CustomUser(models.Model):
     login = models.CharField(max_length=50, verbose_name='Имя пользователя в системе (никнейм)')
-    password = models.CharField(max_length=30, verbose_name='Пароль пользователя')
+    password = models.TextField(verbose_name='Пароль пользователя')
     name = models.CharField(max_length=50, verbose_name='Имя пользователя')
     last_name = models.CharField(max_length=50, verbose_name='Фамилия пользователя')
     patronymic = models.CharField(max_length=50, verbose_name='Отчество пользователя')
