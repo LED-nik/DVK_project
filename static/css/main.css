@@ -19,6 +19,9 @@
   background:#fff !important;
 }
 
+.body {
+  background-color: #F0F0F0;
+}
 
 
 .navbar{
@@ -120,12 +123,327 @@
  width: 100%;
 }
 
-.srks  p {
+.srks  p{
 
 
-    /*margin-right: 20px;
-    padding-top: 20px;*/
+  /*margin-right: 20px;
+  padding-top: 20px;*/
 
-    font-size: 30px;
-    text-align: center;
+  font-size: 30px;
+  text-align: center;}
+
+
+.test1 {
+  position: relative;
+  height: 500px;
+
+margin-left: auto;
+margin-right:  auto;
+top: 40px;
+
+background: #FFFFFF;
+border-radius: 15px;
+}
+
+.test2 {
+  position: relative;
+  height: 600px;
+
+margin-left: auto;
+margin-right:  auto;
+top: 40px;
+
+background: #FFFFFF;
+border-radius: 15px;
+}
+.test1 h3{
+  position: relative;
+
+left: 10%;
+top: 35%;
+
+
+font-style: normal;
+font-weight: bold;
+font-size: 36px;
+line-height: 42px;
+
+color: #000000;
+}
+.test1 p{
+    position: relative;
+  width: 50%;
+  --height: 160px;
+  left: 10%;
+  top: 40%;
+
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  --line-height: 42px;
+
+  color: #000000;
+
+
+
+}
+.test1 img{
+position: absolute;
+width: 254.34px;
+height: auto;
+left: 70%;
+top: 10%;
+}
+.test1 button{
+  position: absolute;
+  border-radius: 10px;
+ background-color: rgb(126, 202, 216);
+ font-size: 30px;
+ color: rgb(255, 255, 255);
+ width: 241px;
+ height: 60px;
+ bottom: 5%;
+ right: 5%;
+
+}
+
+.hr-line{
+position: relative;
+margin: 23% 0 ;
+height: 0;
+border: none;
+border-top: 1px solid #333
+}
+
+.test2 button{
+  position: absolute;
+  border-radius: 10px;
+ background-color: rgb(126, 202, 216);
+ font-size: 30px;
+ color: rgb(255, 255, 255);
+ width: 241px;
+ height: 60px;
+ bottom: 5%;
+ right: 5%;
+}
+
+.usl {
+
+position: absolute;
+width: 50%;
+left: 15%;
+top: 10%;
+}
+.usl1 {
+
+position: absolute;
+width: 50%;
+left: 20%;
+top: 30%;
+}
+.usl2 {
+
+position: absolute;
+width: 50%;
+left: 20%;
+top: 45%;
+}
+.usl3 {
+
+position: absolute;
+width: 50%;
+left: 20%;
+top: 60%;
+}
+
+.usl h1{
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.usl p{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.usl1 h3{
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+
+}
+.usl1 p{
+
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+}
+
+.usl2 h3{
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+
+}
+.usl2 p{
+
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+}
+
+.usl3 h3{
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+
+}
+.usl3 p{
+
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+}
+
+.back{
+  position: absolute;
+  left: 10%;
+  bottom:10%;
+}
+.back p{
+  color: #2196F3;
+}
+
+/* ------chat*/
+
+.bot img{
+  margin-left: 45%;
+  margin-top: 5%;
+  width: 200px;
+  height: auto;
+  left: 70%;
+  top: 10%;
+
+}
+
+.chat-list {
+    padding: 0;
+    font-size: .8rem;
+}
+
+.chat-list li {
+    margin-bottom: 10px;
+    overflow: auto;
+    color: #ffffff;
+}
+
+.chat-list .chat-img {
+    float: left;
+    width: 48px;
+}
+
+.chat-list .chat-img img {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    width: 100%;
+}
+
+.chat-list .chat-message {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    background: #03a9f4;
+    display: inline-block;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.chat-list .chat-message:before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    width: 0;
+    height: 0;
+}
+
+.chat-list .chat-message h5 {
+    margin: 0 0 5px 0;
+    font-weight: 600;
+    line-height: 100%;
+    font-size: .9rem;
+}
+
+.chat-list .chat-message p {
+    line-height: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-list .chat-body {
+    margin-left: 20px;
+    float: left;
+    width: 60%;
+}
+
+.chat-list .in .chat-message:before {
+    left: -12px;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid #03a9f4;
+}
+
+.chat-list .out .chat-img {
+    float: right;
+}
+
+.chat-list .out .chat-body {
+    float: right;
+    margin-right: 20px;
+    text-align: right;
+
+}
+
+.chat-list .out .chat-message {
+    background: #0277bd;
+}
+
+.chat-list .out .chat-message:before {
+    right: -12px;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid #0277bd;
+}
+
+.card-header:first-child {
+    -webkit-border-radius: 0.3rem 0.3rem 0 0;
+    -moz-border-radius: 0.3rem 0.3rem 0 0;
+    border-radius: 0.3rem 0.3rem 0 0;
+}
+
+
+.content{
+    margin-top:40px;
+}
+
+.ch-card{
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.modal-body button{
+
+  border-radius: 10px;
+ background-color: #0277bd;
+ font-size: 14px;
+ text-align: center;
+ color: rgb(255, 255, 255);
+ width: 120px;
+ height: 30px;
+ float:right;
+
 }

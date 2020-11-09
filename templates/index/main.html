@@ -1,6 +1,9 @@
 {% extends "index/base.html" %}
 {% load static %}
 {% block head %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script type="text/javascript" src="{% static 'js/welcome.js' %}"></script>
 {% endblock %}
@@ -8,110 +11,168 @@
 {% block body %}
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg static-top" position:fixed>
-      <img src="static/images/logo.png" class="img-logo">
-        <a class="nav-link" href="https://yandex.ru/">DVAK</a>
+        <img src="static/images/logo.png" class="img-logo">
+        <a class="nav-link" href="/welcome">DVAK</a>
 
-    <div class="collapse navbar-collapse " id="navbarSupportedContent">
-         <ul class="navbar-nav mr-4">
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav mr-4">
 
-           <li class="nav-item">
-             <a class="nav-link" href="#">Консультация пользователя</a>
-           </li>
-           <li class="nav-item">
-             <a class="nav-link " href="/log_out" id="logOut">Выход</a>
-           </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target=".bd-example-modal-lg">
+                        Консультация с врачом
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/log_out" id="logOut">Выход</a>
+                </li>
 
-         </ul>
+            </ul>
 
-       </div>
+        </div>
     </nav>
 
     <!-- header -->
     <header class="header">
-      <div class="container">
-        <div class="description text-left">
-          <h3>Вас мучает свербение в очке?</h3>
-          <h2>Пройдите тест чтобы узнать причину</h2>
-          <p></p>
-          <button class="btn btn-outline-secondary">Начать тест</button>
+        <div class="container">
+            <div class="description text-left">
+                <h3>Вас мучает горло?</h3>
+                <h2>Пройдите тест чтобы узнать причину</h2>
+                <p></p>
+                <button class="btn btn-outline-secondary">Начать тест</button>
+            </div>
         </div>
-      </div>
     </header>
 
     <!-- about test -->
     <div class="about" id="about">
-	     <div class="container">
-         <div class="block1 text-left">
-	          <h1>Тут типа заголовок не слишком  маленький</h1>
-          </div>
-		      <div class="row">
-            <!--левая часть-->
-			      <div class="col-lg-6 col-md-4 col-sm-12">
-				            <img src="static/images/table.png" class="img">
-			</div>
-      <!--правая часть-->
-			<div class="col-lg-6 col-md-4 col-sm-12 ">
+        <div class="container">
+            <div class="block1 text-left">
+                <h1>Тут типа заголовок не слишком маленький</h1>
+            </div>
+            <div class="row">
+                <!--левая часть-->
+                <div class="col-lg-6 col-md-4 col-sm-12">
+                    <img src="static/images/table.png" class="img">
+                </div>
+                <!--правая часть-->
+                <div class="col-lg-6 col-md-4 col-sm-12 ">
 
-          <div class="block2">
-				<p>
-          Ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-         quis nostrud exercitation ullamco.
-				</p>
-      </div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="srks" id="srks">
-  <div class="container">
-    <div class="block1 text-left">
-      <h1>Тут типа ещё один заголовок не слишком  маленький</h1>
+                    <div class="block2">
+                        <p>
+                            Ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row">
 
-      <!--круг 1-->
-      <div class="col-lg-3 col-md-4 col-sm-12">
-        <img src="static/images/srk1.gif" class="img">
-        <p>
-          proident, sunt in culpa qui officia deser
-        </p>
-      </div>
+    <!-- Button trigger modal -->
 
-      <!--круг 2-->
-      <div class="col-lg-3 col-md-4 col-sm-12">
-        <img src="static/images/srk2.gif" class="img">
-        <p>
-          proident, sunt in culpa qui officia
-        </p>
-      </div>
 
-      <!--круг 3-->
-      <div class="col-lg-3 col-md-4 col-sm-12">
-        <img src="static/images/srk3.gif" class="img">
-        <p>
-          proident, sunt in culpa qui officia des
-        </p>
-      </div>
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="chatModalLabel" id="chatModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chatModalLabel">Чат с доктором</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container content">
+                        <div class="ch-card-lg">
+                            <div class="card-body height3">
+                                <ul class="chat-list">
 
-      <!--круг 4-->
-      <div class="col-lg-3 col-md-4 col-sm-12">
-        <img src="static/images/srk4.gif" class="img">
-        <p>
-          proident, sunt in culpa qui officia de
-        </p>
-      </div>
-      </div>
+                                    <li class="in">
+                                        <div class="chat-img">
+                                            <img alt="Avtar" src="static/images/botav.svg">
+                                        </div>
+                                        <div class="chat-body">
+                                            <div class="chat-message">
+                                                <h5>Врач-бот</h5>
+                                                <p style="font-size: 17px; color: black">Добрый день, опишите, пожалуйста, свои симптомы.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="out">
+                                        <div class="chat-img">
+                                            <img alt="Avtar" src="static/images/avatar6.png">
+                                        </div>
+                                        <div class="chat-body">
+                                            <div class="chat-message">
+                                                <h5>Вы</h5>
+                                                <p>Кажется, я умираю, у меня чешется жопа, горло болит, выпадают волосы,
+                                                    прыщи на спине, что со мной?</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="white">
+                                <div class="form-group basic-textarea">
+                                    <textarea class="form-control pl-2 my-0" id="formControlTextarea" rows="3"
+                                              placeholder="Введите сообщение здесь"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button class="btn btn-outline-secondary" id="sendMessage" data-url="/send_message"> Отправить</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 
+    <div class="srks" id="srks">
+        <div class="container">
+            <div class="block1 text-left">
+                <h1>Тут типа ещё один заголовок не слишком маленький</h1>
+            </div>
+            <div class="row">
 
+                <!--круг 1-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <img src="static/images/srk1.gif" class="img">
+                    <p>
+                        proident, sunt in culpa qui officia deser
+                    </p>
+                </div>
 
+                <!--круг 2-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <img src="static/images/srk2.gif" class="img">
+                    <p>
+                        proident, sunt in culpa qui officia
+                    </p>
+                </div>
 
+                <!--круг 3-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <img src="static/images/srk3.gif" class="img">
+                    <p>
+                        proident, sunt in culpa qui officia des
+                    </p>
+                </div>
 
-    <script type="text/javascript" src="static/js/jquery.min.js"></script>
-    <script type="text/javascript" src="static/js/main.js"></script>
-
-<!--    width: 40%;" src="{% static "images/welcome.jpg" %}">-->
+                <!--круг 4-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <img src="static/images/srk4.gif" class="img">
+                    <p>
+                        proident, sunt in culpa qui officia de
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

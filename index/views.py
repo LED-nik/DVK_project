@@ -61,6 +61,15 @@ class UserCreateView(ProtectedView):
         return HttpResponse()
 
 
+class ChatView(ProtectedView):
+    def post(self, request):
+        super().get(request)
+        if self.user_is_logged_in:
+            message = request.POST.get('message', '')
+            decrypted_message = RSA.decrypt(message, SECRET_KEY_TUPLE)
+            return JsonResponse({'answer': 'You sent {}'.format(decrypted_message)}, status=200)
+
+
 class MainPageView(ProtectedView):
     def get(self, request):
         super().get(request)
