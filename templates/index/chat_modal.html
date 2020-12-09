@@ -1,0 +1,46 @@
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="chatModalLabel" id="chatModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="chatModalLabel">Чат с доктором</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container content">
+                        <div class="ch-card-lg">
+                            <div class="card-body height3">
+                                <ul class="chat-list">
+
+                                    <li class="in">
+                                        <div class="chat-img">
+                                            <img alt="Avtar" src="static/images/botav.svg">
+                                        </div>
+                                        <div class="chat-body">
+                                            <div class="chat-message">
+                                                <h5>Врач-бот</h5>
+                                                <p style="font-size: 17px; color: black">Добрый день, опишите, пожалуйста, свои симптомы.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="white">
+                                <div class="form-group basic-textarea">
+                                    <textarea class="form-control pl-2 my-0" id="formControlTextarea" rows="3"
+                                              placeholder="Введите сообщение здесь"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button class="btn btn-outline-secondary" id="sendMessage" data-url="/send_message"> Отправить</button>
+                </div>
+            </div>
+        </div>
+    </div>

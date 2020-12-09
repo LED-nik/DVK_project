@@ -1,4 +1,7 @@
 $(document).ready(function () {
+
+    let secure = false; // TODO: убрать
+
     $('.header').height($(window).height());
 
     function encrypt(passw, openKey, n) {
@@ -36,24 +39,35 @@ $(document).ready(function () {
         $textArea.trigger('focus');
         $('#sendMessage').on('click', () => {
             let message = $textArea.val();
-            let encryptedMessage = encrypt(message, getCookie('open_key'), getCookie('n'));
-            $.ajax({
-                type: 'post',
-                url: $('#sendMessage').attr('data-url'),
-                data: {'message': encryptedMessage},
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
-                success: function (data) {
-                    let answer = data['answer'];
-                    $('.chat-list').append($(`<li class="out"> \
+            $('.chat-list').append($(`<li class="out"> \
                                         <div class="chat-img"> \
                                             <img alt="Avtar" src="static/images/avatar6.png"> \
                                         </div> \
                                         <div class="chat-body"> \
                                             <div class="chat-message"> \
                                                 <h5>Вы</h5> \
-                                                <p>${answer}</p> \
+                                                <p>${message}</p> \
+                                            </div> \
+                                        </div> \
+                                    </li>`));
+            let encryptedMessage = secure ? encrypt(message, getCookie('open_key'), getCookie('n')): message; // TODO: удалить
+            $.ajax({
+                type: 'post',
+                url: $('#sendMessage').attr('data-url'),
+                data: {'message': encryptedMessage},
+                headers: {
+                    'custom_csrf_token': getCookie('custom_csrf_token')
+                },
+                success: function (data) {
+                    let answer = data['answer'];
+                    $('.chat-list').append($(`<li class="in"> \
+                                        <div class="chat-img"> \
+                                            <img alt="Avtar" src="static/images/botav.svg"> \
+                                        </div> \
+                                        <div class="chat-body"> \
+                                            <div class="chat-message"> \
+                                                <h5>Чат-бот</h5> \
+                                                <p  style="font-size: 17px; color: black">${answer}</p> \
                                             </div> \
                                         </div> \
                                     </li>`))

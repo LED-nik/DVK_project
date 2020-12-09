@@ -1,4 +1,10 @@
 $(document).ready(function () {
+
+    let secure = false; // TODO: убрать
+
+    const $loginForm = $('#loginForm'),
+        $userCreateForm = $('#userCreateForm');
+
     $('.header').height($(window).height());
 
     function encrypt(passw, openKey, n) {
@@ -8,7 +14,6 @@ $(document).ready(function () {
         for (let char of message) {
             encryptedMessage.push((BigInt(char.charCodeAt(0)) ** BigInt(openKey)) % BigInt(n));
         }
-        console.log(message, encryptedMessage);
         return encryptedMessage.join("O")
     }
 
@@ -33,20 +38,22 @@ $(document).ready(function () {
         document.cookie = `${cookieName} = ${value}; max-age=99999`;
     }
 
-    const $loginForm = $('#loginForm'),
-        $userCreateForm = $('#userCreateForm');
 
     $userCreateForm.submit(function (e) {
         e.preventDefault();
+        const $passwordInput = $('input[name="password"]');
+        const encryptedPass = secure ? encrypt($passwordInput.val(), getCookie('open_key'), getCookie('n')) : $passwordInput.val(); //TODO:убрать
+        let data = $(this).serializeArray();
+        data[1]['value'] = encryptedPass;
         $.ajax({
             url: $(this).attr('data-url'),
             type: 'post',
             data: $(this).serialize(),
             headers: {
-                'X-CSRFToken': getCookie('csrftoken')
+                'custom_csrf_token': getCookie('custom_csrf_token')
             },
             success: function () {
-                alert('Done!');
+                alert('Пользователь создан!');
             }
         });
     });
@@ -55,19 +62,16 @@ $(document).ready(function () {
         e.preventDefault();
         let data = {};
         if (getCookie('sid') === "undefined" || !getCookie('sid')) {
-            let encryptedPass = encrypt($(this).find('input[name="password"]').val(), getCookie('open_key'), getCookie('n'));
-            $(this).find('input[name="password"]').val(encryptedPass);
-            data = $(this).serialize();
-        } else {
-            const sid = getCookie('sid');
-            data = {'sid': sid};
+            let encryptedPass = secure ? encrypt($(this).find('input[name="password"]').val(), getCookie('open_key'), getCookie('n')) : $(this).find('input[name="password"]').val(); //TODO: убрать
+            data = $(this).serializeArray();
+            data[1]['value'] = encryptedPass;
         }
         $.ajax({
             type: 'post',
             url: $(this).attr('data-url'),
             data: data,
             headers: {
-                'X-CSRFToken': getCookie('csrftoken')
+                'custom_csrf_token': getCookie('custom_csrf_token')
             },
             success: function (data) {
                 setCookie('sid', data['sid']);
