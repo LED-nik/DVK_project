@@ -54,6 +54,9 @@ $(document).ready(function () {
             },
             success: function () {
                 alert('Пользователь создан!');
+            },
+            error(data) {
+                alert(data.responseText);
             }
         });
     });

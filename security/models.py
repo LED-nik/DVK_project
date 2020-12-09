@@ -26,6 +26,11 @@ class Session(models.Model):
                                expire_date=datetime.datetime.now() + datetime.timedelta(minutes=5), user=user)
         return sid_str
 
+    @classmethod
+    def get_user_of_session(cls, sid, request):
+        ip = request.META.get('REMOTE_ADDR')
+        return cls.objects.get(session_data=hashlib.sha3_256((sid + ip).encode('UTF-8')).hexdigest()).user
+
 
 class EncryptionKeys(models.Model):
     open_key = models.BigIntegerField(verbose_name='Открытый ключ')

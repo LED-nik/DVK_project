@@ -34,6 +34,7 @@ $(document).ready(function () {
     $('#logOut').on('click', function () {
         document.cookie = "sid = undefined";
     });
+
     $('#chatModal').on('shown.bs.modal', function () {
         let $textArea = $('#formControlTextarea');
         $textArea.trigger('focus');
@@ -50,7 +51,7 @@ $(document).ready(function () {
                                             </div> \
                                         </div> \
                                     </li>`));
-            let encryptedMessage = secure ? encrypt(message, getCookie('open_key'), getCookie('n')): message; // TODO: удалить
+            let encryptedMessage = secure ? encrypt(message, getCookie('open_key'), getCookie('n')) : message; // TODO: удалить
             $.ajax({
                 type: 'post',
                 url: $('#sendMessage').attr('data-url'),
@@ -78,4 +79,6 @@ $(document).ready(function () {
             });
         });
     });
+
+    $("#demo-finish").on('click', () => alert("This is a demo version developed for educational purposes. If you are interested in the project, please contact DVAK-Studio."));
 });

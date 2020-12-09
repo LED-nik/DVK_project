@@ -1,12 +1,14 @@
+import secrets
 from django.db import models
 
 
 class CustomUser(models.Model):
-    login = models.CharField(max_length=50, verbose_name='Имя пользователя в системе (никнейм)')
+    login = models.CharField(max_length=50, verbose_name='Имя пользователя в системе (никнейм)', unique=True)
     password = models.TextField(verbose_name='Пароль пользователя')
     name = models.CharField(max_length=50, verbose_name='Имя пользователя')
     last_name = models.CharField(max_length=50, verbose_name='Фамилия пользователя')
     patronymic = models.CharField(max_length=50, verbose_name='Отчество пользователя')
+    salt = models.TextField(verbose_name='Соль для пароля пользователя', default=secrets.token_hex(16))
 
     class Meta:
         verbose_name_plural = 'Пользователи'
