@@ -1,2 +1,7 @@
 /DVK_project/settings.py
+<<<<<<< HEAD
 /index/migrations/
+=======
+/index/migrations/0001_initial.py
+>>>>>>> 3030271f3b74415243a7716e70cf3e8a122c48c6
+/security/migrations/0001_initial.py

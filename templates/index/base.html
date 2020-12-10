@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    {% block head %}
+    {% endblock %}
     <title>Главная страница проекта DVK-studio</title>
 </head>
 <body>
-    {% block body %}
-    {% endblock %}
+{% block body %}
+{% endblock %}
 </body>
 </html>

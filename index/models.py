@@ -1,4 +1,47 @@
+import secrets
 from django.db import models
+
+
+class CustomUser(models.Model):
+    login = models.CharField(max_length=50, verbose_name='Имя пользователя в системе (никнейм)', unique=True)
+    password = models.TextField(verbose_name='Пароль пользователя')
+    name = models.CharField(max_length=50, verbose_name='Имя пользователя')
+    last_name = models.CharField(max_length=50, verbose_name='Фамилия пользователя')
+    patronymic = models.CharField(max_length=50, verbose_name='Отчество пользователя')
+    salt = models.TextField(verbose_name='Соль для пароля пользователя', default=secrets.token_hex(16))
+    last_login_try = models.DateTimeField(verbose_name='Время последней попытки входа', null=True, blank=True)
+    login_tries_done = models.IntegerField(verbose_name='Количество попыток входа подряд', null=True, blank=True,
+                                           default=0)
+
+    class Meta:
+        verbose_name_plural = 'Пользователи'
+        verbose_name = 'Пользователи'
+
+
+class Symptom(models.Model):
+    name = models.CharField(verbose_name='Наименовение симптома', max_length=255)
+
+    class Meta:
+        verbose_name_plural = 'Симптомы'
+        verbose_name = 'Симптом'
+
+
+class Disease(models.Model):
+    name = models.CharField(verbose_name='Наименовение болезни', max_length=255)
+    symptoms = models.ManyToManyField(Symptom, verbose_name='Симптомы', related_name='diseases')
+
+    class Meta:
+        verbose_name_plural = 'Болезни'
+        verbose_name = 'Болезнь'
+
+
+class UserCard(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь', related_name='card')
+    disease = models.ManyToManyField(Disease, verbose_name='Болезни')
+
+    class Meta:
+        verbose_name_plural = 'Медицинские карты пользователей'
+        verbose_name = 'Медицинская карта пользователя'
 
 
 class Item(models.Model):
@@ -15,7 +58,11 @@ class Order(models.Model):
     ]
     item = models.ForeignKey('Item', on_delete=models.CASCADE)
     count = models.IntegerField()
+
     #  user = models.ForeignKey('User', on_delete=models.CASCADE())
+
+    user = models.ForeignKey('CustomUser', on_delete=models.CASCADE, default=None)
+
     address = models.ForeignKey('Address', on_delete=models.CASCADE)
     payment_method = models.CharField(choices=METHOD_PAYMENT, max_length=50)
 
@@ -30,6 +77,10 @@ class CreditCard(models.Model):
     number = models.IntegerField()
     card_holder = models.CharField(max_length=100)
     exp_date = models.DateField()
+
     #  user = models.ForeignKey('User', on_delete=models.CASCADE())S
 
+
+
+    user = models.ForeignKey('CustomUser', on_delete=models.CASCADE, default=None)
 

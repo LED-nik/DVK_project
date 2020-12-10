@@ -1,9 +1,116 @@
 {% extends "index/base.html" %}
 {% load static %}
+{% block head %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script type="text/javascript" src="{% static 'js/welcome_page.js' %}"></script>
+{% endblock %}
 
 {% block body %}
-    <img style="display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;" src="{% static 'images/welcome.jpg' %}">
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg static-top" position:fixed>
+        <img src="{% static 'images/logo.png' %}" class="img-logo">
+        <a class="nav-link" href="/welcome">DVAK</a>
+
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav mr-4">
+
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target=".bd-example-modal-lg">
+                        Консультация с врачом
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/log_out" id="logOut">Выход</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+    <!-- header -->
+    <header class="header">
+        <div class="container">
+            <div class="description text-left">
+                <h3>Беспокоит здоровье?</h3>
+                <h2>Пройдите тест, чтобы узнать, что с вами</h2>
+                <p></p>
+                <button class="btn btn-outline-secondary" id="demo-finish">Начать тест</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- about test -->
+    <div class="about" id="about">
+        <div class="container">
+            <div class="block1 text-left">
+                <h1>Тут заголовок не слишком маленький</h1>
+            </div>
+            <div class="row">
+                <!--левая часть-->
+                <div class="col-lg-6 col-md-4 col-sm-12">
+                    <img src="static/images/table.png" class="img">
+                </div>
+                <!--правая часть-->
+                <div class="col-lg-6 col-md-4 col-sm-12 ">
+
+                    <div class="block2">
+                        <p>
+                            Ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "index/chat_modal.html" %}
+
+    <div class="srks" id="srks">
+        <div class="container">
+            <div class="block1 text-left">
+                <h1>Тут типа ещё один заголовок не слишком маленький</h1>
+            </div>
+            <div class="row">
+
+                <!--круг 1-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <img src="static/images/srk1.gif" class="img">
+                    <p>
+                        proident, sunt in culpa qui officia deser
+                    </p>
+                </div>
+
+                <!--круг 2-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <img src="static/images/srk2.gif" class="img">
+                    <p>
+                        proident, sunt in culpa qui officia
+                    </p>
+                </div>
+
+                <!--круг 3-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <img src="static/images/srk3.gif" class="img">
+                    <p>
+                        proident, sunt in culpa qui officia des
+                    </p>
+                </div>
+
+                <!--круг 4-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <img src="static/images/srk4.gif" class="img">
+                    <p>
+                        proident, sunt in culpa qui officia de
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
