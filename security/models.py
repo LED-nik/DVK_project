@@ -29,7 +29,9 @@ class Session(models.Model):
     @classmethod
     def get_user_of_session(cls, sid, request):
         ip = request.META.get('REMOTE_ADDR')
-        return cls.objects.get(session_data=hashlib.sha3_256((sid + ip).encode('UTF-8')).hexdigest()).user
+        session = cls.objects.filter(session_data=hashlib.sha3_256((sid + ip).encode('UTF-8')).hexdigest()).first()
+        if session is not None:
+            return session.user
 
 
 class EncryptionKeys(models.Model):

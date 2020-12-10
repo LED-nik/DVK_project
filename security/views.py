@@ -23,7 +23,7 @@ class ProtectedView(View, UserCheckMixin):
         login = self.request.POST.get('login')
         if sid is not None and sid != "undefined":
             self.user = Session.get_user_of_session(sid, self.request)
-        elif login is not None:
+        if self.user is None and login is not None:
             self.user = CustomUser.objects.filter(login=login).first()
 
     def get(self, request):

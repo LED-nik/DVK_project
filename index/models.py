@@ -9,6 +9,9 @@ class CustomUser(models.Model):
     last_name = models.CharField(max_length=50, verbose_name='Фамилия пользователя')
     patronymic = models.CharField(max_length=50, verbose_name='Отчество пользователя')
     salt = models.TextField(verbose_name='Соль для пароля пользователя', default=secrets.token_hex(16))
+    last_login_try = models.DateTimeField(verbose_name='Время последней попытки входа', null=True, blank=True)
+    login_tries_done = models.IntegerField(verbose_name='Количество попыток входа подряд', null=True, blank=True,
+                                           default=0)
 
     class Meta:
         verbose_name_plural = 'Пользователи'

@@ -1,5 +1,8 @@
 import hashlib
 import random
+import datetime
+
+from django.utils import timezone
 
 from .models import Session
 from index.models import CustomUser
@@ -88,11 +91,17 @@ class UserCheckMixin:
     current_user: CustomUser = None
 
     def user_has_session(self, request):
+        self.delete_expired_sessions()
         self.user_session = self.get_user_session(request)
         if self.user_session is not None:
             self.current_user = self.user_session.user
             return True
         return False
+
+    @staticmethod
+    def delete_expired_sessions():
+        for session in Session.objects.filter(expire_date__lt=datetime.datetime.now(tz=timezone.utc)):
+            session.delete()
 
     @staticmethod
     def get_user_session(request):

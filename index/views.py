@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.utils import timezone
 from django.http.response import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from DVK_project.settings import SECURE, CUSTOM_CSRF_TOKEN
 from index.models import CustomUser
@@ -16,6 +16,21 @@ from security.views import ProtectedView
 
 
 class LogInView(ProtectedView):
+
+    def try_to_ban_user(self):
+        current_time = datetime.datetime.now(tz=timezone.utc)
+        if self.user.last_login_try is None:
+            self.user.last_login_try = current_time
+        if current_time - self.user.last_login_try >= datetime.timedelta(minutes=5):
+            self.user.login_tries_done = 1
+        else:
+            self.user.login_tries_done += 1
+        self.user.last_login_try = current_time
+        self.user.save()
+        if self.user.login_tries_done >= 3:
+            return JsonResponse({'message': 'Превышено число попыток входа. Попробуйте позже.'},
+                                status=403)
+
     def post(self, request):
         try:
             super().post(request)
@@ -26,9 +41,15 @@ class LogInView(ProtectedView):
             password = request.POST.get('password', '')
             decrypted_password = RSA.decrypt(password, SECRET_KEY_TUPLE) if SECURE else password  # TODO:убрать
             salt = self.user.salt if self.user is not None else ""
-            hash_password = hashlib.sha3_256((decrypted_password + salt).encode('UTF-8')).hexdigest()
+            hashed_password = hashlib.sha3_256((decrypted_password + salt).encode('UTF-8')).hexdigest()
+            if self.user is not None:
+                json_response = self.try_to_ban_user()
+                if json_response is not None:
+                    return json_response
             try:
-                user = CustomUser.objects.get(login=login, password=hash_password)
+                user = CustomUser.objects.get(login=login, password=hashed_password)
+                user.login_tries_done = 1
+                user.save()
             except CustomUser.DoesNotExist:
                 return JsonResponse({'message': 'Нет такого пользователя в системе! Проверьте логин и пароль.'},
                                     status=404)
@@ -99,4 +120,4 @@ class MainPageView(ProtectedView):
         if self.user_is_logged_in:
             return render(request, 'index/main.html')
         else:
-            return render(request, 'index/reg-auth.html')
+            return redirect("/")

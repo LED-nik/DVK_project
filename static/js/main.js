@@ -63,12 +63,9 @@ $(document).ready(function () {
 
     $loginForm.submit(function (e) {
         e.preventDefault();
-        let data = {};
-        if (getCookie('sid') === "undefined" || !getCookie('sid')) {
-            let encryptedPass = secure ? encrypt($(this).find('input[name="password"]').val(), getCookie('open_key'), getCookie('n')) : $(this).find('input[name="password"]').val(); //TODO: убрать
-            data = $(this).serializeArray();
-            data[1]['value'] = encryptedPass;
-        }
+        let encryptedPass = secure ? encrypt($(this).find('input[name="password"]').val(), getCookie('open_key'), getCookie('n')) : $(this).find('input[name="password"]').val(); //TODO: убрать
+        let data = $(this).serializeArray();
+        data[1]['value'] = encryptedPass;
         $.ajax({
             type: 'post',
             url: $(this).attr('data-url'),
