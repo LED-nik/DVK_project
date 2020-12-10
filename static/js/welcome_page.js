@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-    let secure = false; // TODO: убрать
 
     $('.header').height($(window).height());
 
@@ -51,7 +50,7 @@ $(document).ready(function () {
                                             </div> \
                                         </div> \
                                     </li>`));
-            let encryptedMessage = secure ? encrypt(message, getCookie('open_key'), getCookie('n')) : message; // TODO: удалить
+            let encryptedMessage = encrypt(message, getCookie('open_key'), getCookie('n'));
             $.ajax({
                 type: 'post',
                 url: $('#sendMessage').attr('data-url'),

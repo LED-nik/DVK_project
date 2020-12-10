@@ -39,7 +39,7 @@ class LogInView(ProtectedView):
         if not self.user_is_logged_in:
             login = request.POST.get('login', '')
             password = request.POST.get('password', '')
-            decrypted_password = RSA.decrypt(password, SECRET_KEY_TUPLE) if SECURE else password  # TODO:убрать
+            decrypted_password = RSA.decrypt(password, SECRET_KEY_TUPLE)
             salt = self.user.salt if self.user is not None else ""
             hashed_password = hashlib.sha3_256((decrypted_password + salt).encode('UTF-8')).hexdigest()
             if self.user is not None:
@@ -110,7 +110,7 @@ class ChatView(ProtectedView):
             return HttpResponse(status=403)
         if self.user_is_logged_in:
             message = request.POST.get('message', '')
-            decrypted_message = RSA.decrypt(message, SECRET_KEY_TUPLE) if SECURE else message  # TODO: убрать
+            decrypted_message = RSA.decrypt(message, SECRET_KEY_TUPLE)
             return JsonResponse({'answer': 'Вы написали: {}'.format(decrypted_message)}, status=200)
 
 

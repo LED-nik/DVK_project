@@ -1,7 +1,5 @@
 $(document).ready(function () {
 
-    let secure = false; // TODO: убрать
-
     const $loginForm = $('#loginForm'),
         $userCreateForm = $('#userCreateForm');
 
@@ -42,7 +40,7 @@ $(document).ready(function () {
     $userCreateForm.submit(function (e) {
         e.preventDefault();
         const $passwordInput = $('input[name="password"]');
-        const encryptedPass = secure ? encrypt($passwordInput.val(), getCookie('open_key'), getCookie('n')) : $passwordInput.val(); //TODO:убрать
+        const encryptedPass = encrypt($passwordInput.val(), getCookie('open_key'), getCookie('n'));
         let data = $(this).serializeArray();
         data[1]['value'] = encryptedPass;
         $.ajax({
@@ -63,7 +61,7 @@ $(document).ready(function () {
 
     $loginForm.submit(function (e) {
         e.preventDefault();
-        let encryptedPass = secure ? encrypt($(this).find('input[name="password"]').val(), getCookie('open_key'), getCookie('n')) : $(this).find('input[name="password"]').val(); //TODO: убрать
+        let encryptedPass = encrypt($(this).find('input[name="password"]').val(), getCookie('open_key'), getCookie('n'));
         let data = $(this).serializeArray();
         data[1]['value'] = encryptedPass;
         $.ajax({
