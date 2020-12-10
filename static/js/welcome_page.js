@@ -10,7 +10,6 @@ $(document).ready(function () {
         for (let char of message) {
             encryptedMessage.push((BigInt(char.charCodeAt(0)) ** BigInt(openKey)) % BigInt(n));
         }
-        console.log(message, encryptedMessage);
         return encryptedMessage.join("O")
     }
 
