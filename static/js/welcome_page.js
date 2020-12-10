@@ -66,7 +66,7 @@ $(document).ready(function () {
                                         </div> \
                                         <div class="chat-body"> \
                                             <div class="chat-message"> \
-                                                <h5>Чат-бот</h5> \
+                                                <h5>Врач-бот</h5> \
                                                 <p  style="font-size: 17px; color: black">${answer}</p> \
                                             </div> \
                                         </div> \

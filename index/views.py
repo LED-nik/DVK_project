@@ -104,14 +104,9 @@ class UserCreateView(ProtectedView):
 
 class ChatView(ProtectedView):
     def post(self, request):
-        try:
-            super().post(request)
-        except ValidationError:
-            return HttpResponse(status=403)
-        if self.user_is_logged_in:
-            message = request.POST.get('message', '')
-            decrypted_message = RSA.decrypt(message, SECRET_KEY_TUPLE)
-            return JsonResponse({'answer': 'Вы написали: {}'.format(decrypted_message)}, status=200)
+        message = request.POST.get('message', '')
+        decrypted_message = RSA.decrypt(message, SECRET_KEY_TUPLE)
+        return JsonResponse({'answer': 'Вы написали: {}'.format(decrypted_message)}, status=200)
 
 
 class MainPageView(ProtectedView):

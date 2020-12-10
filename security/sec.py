@@ -12,7 +12,7 @@ class RSA:
     secret_key = None
 
     @staticmethod
-    def prime_generator(count=2, max_lenght=1000):
+    def prime_generator(max_lenght=1000):
         """ Return random prime number from 2 to max_lenght.
         Method: Решето Эратосфена
 
